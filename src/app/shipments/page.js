@@ -6,7 +6,7 @@ import { useState } from 'react'
 
 export default function ShipmentsPage() {
   const [name, setName] = useState('')
-  const shipments = useSelector(state => state.shipments.shipments)
+  const shipments = useSelector(state => state.shipments.shipments || {})
   const dispatch = useDispatch()
 
   const handleSubmit = (e) => {
