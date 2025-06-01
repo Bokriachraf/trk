@@ -7,7 +7,7 @@ const ShipmentList = () => {
   const dispatch = useDispatch()
 
   // ✅ ici on récupère les données du reducer "shipmentList"
-  const { shipments, loading, error } = useSelector(state => state.shipmentList || {})
+  const { shipments = [], loading = false, error = null  } = useSelector(state => state.shipmentList || {})
 
   useEffect(() => {
     dispatch(listShipments()) // ✅ ici on déclenche l'action

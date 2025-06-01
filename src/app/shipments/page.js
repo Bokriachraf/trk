@@ -6,7 +6,10 @@ import { useState } from 'react'
 
 export default function ShipmentsPage() {
   const [name, setName] = useState('')
-  const shipments = useSelector(state => state.shipments.shipments || {})
+
+  // ✅ Sécuriser avec une valeur par défaut []
+  const shipments = useSelector(state => state.shipments?.shipments || [])
+
   const dispatch = useDispatch()
 
   const handleSubmit = (e) => {

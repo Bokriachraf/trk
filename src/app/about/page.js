@@ -1,5 +1,3 @@
-import { Metadata } from 'next'
-
 export const metadata = {
   title: 'À propos de TRK | Suivi Douanier',
   description: 'Découvrez notre mission de digitalisation du transit et du suivi douanier avec TRK.',
