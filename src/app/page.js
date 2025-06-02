@@ -1,77 +1,4 @@
 
-// 'use client'
-
-// import { motion } from 'framer-motion'
-// import Image from 'next/image'
-// import ShipmentForm from '../components/ShipmentForm'
-// import ShipmentList from '../components/ShipmentList'
-// import { useState, useEffect } from 'react'
-
-// const sliderImages = [
-//   '/hero-transit1.webp',
-//   '/hero-transit2.webp',
-//   '/hero-transit3.webp',
-//   '/hero-transit4.webp',
-//   '/hero-transit5.webp',
-// ]
-
-// export default function Home() {
-//   const [current, setCurrent] = useState(0)
-
-//   useEffect(() => {
-//     const interval = setInterval(() => {
-//       setCurrent((prev) => (prev + 1) % sliderImages.length)
-//     }, 4000)
-//     return () => clearInterval(interval)
-//   }, [])
-
-//   return (
-//     <main className="min-h-screen relative overflow-hidden">
-//       {/* Slider Fullscreen */}
-//       <div className="absolute inset-0 z-0">
-//         <Image
-//           src={sliderImages[current]}
-//           alt="Slide background"
-//           layout="fill"
-//           objectFit="cover"
-//           quality={100}
-//           priority
-//           className="transition-opacity duration-1000"
-//         />
-//         <div className="absolute inset-0 bg-black bg-opacity-40"></div>
-//       </div>
-
-//       {/* Content overlay */}
-//       <div className="relative z-10 flex flex-col md:flex-row min-h-screen items-center justify-between p-10 gap-10">
-//         {/* Tableau de bord */}
-//         <motion.div
-//           initial={{ x: -50, opacity: 0 }}
-//           animate={{ x: 0, opacity: 1 }}
-//           transition={{ duration: 0.8 }}
-//           className="bg-white bg-opacity-90 rounded-xl p-6 w-full md:w-1/3 shadow-xl"
-//         >
-//           <h1 className="text-2xl font-bold text-center mb-4">Tableau de bord TRK</h1>
-//           <ShipmentForm />
-//           <ShipmentList />
-//         </motion.div>
-
-//         {/* CTA */}
-//         <motion.div
-//           initial={{ y: 50, opacity: 0 }}
-//           animate={{ y: 0, opacity: 1 }}
-//           transition={{ duration: 0.8, delay: 0.3 }}
-//           className="text-white text-center md:text-left max-w-md"
-//         >
-//           <h2 className="text-4xl font-bold mb-4">Digitalisez votre transit & douane</h2>
-//           <p className="mb-6 text-lg">Suivi intelligent, conformité réglementaire, gain de temps.</p>
-//           <button className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold px-6 py-3 rounded-xl shadow-lg">
-//             Commencer
-//           </button>
-//         </motion.div>
-//       </div>
-//     </main>
-//   )
-// }
 
 'use client'
 
@@ -79,15 +6,12 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import ShipmentForm from '../components/ShipmentForm'
 import ShipmentList from '../components/ShipmentList'
-import Navbar from '../components/Navbar'
-import Footer from '../components/Footer'
 import { useState, useEffect } from 'react'
 
 const sliderImages = [
   '/hero-transit1.webp',
   '/hero-transit2.webp',
   '/hero-transit3.webp',
-  '/industrialLogistics.jpg',
   '/logistics.jpg',
   '/Logistics_Supply_Chain.jpg',
   '/hero-transit5.webp',
@@ -105,7 +29,7 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen">
-      <Navbar />
+      
 
       {/* Slider Fullscreen */}
       <div className="absolute inset-0 z-0">
@@ -151,7 +75,7 @@ export default function Home() {
         </motion.div>
       </main>
 
-      <Footer />
+      
     </div>
   )
 }

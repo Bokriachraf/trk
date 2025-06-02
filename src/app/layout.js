@@ -1,5 +1,7 @@
 import '../styles/globals.css'
 import Providers from './Providers'
+import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
 
 export const metadata = {
   title: {
@@ -24,7 +26,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="fr">
       <body>
-        <Providers>{children}</Providers>
+        <Providers>
+          <Navbar />
+          <main className="min-h-screen">{children}</main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   )
