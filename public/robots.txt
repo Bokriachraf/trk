@@ -1,5 +1,9 @@
-# public/robots.txt
+# *
 User-agent: *
 Allow: /
 
-Sitemap: https://trk-app.vercel.app/sitemap.xml
+# Host
+Host: https://trk-two.vercel.app
+
+# Sitemaps
+Sitemap: https://trk-two.vercel.app/sitemap.xml

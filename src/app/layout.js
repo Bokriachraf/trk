@@ -9,6 +9,9 @@ export const metadata = {
     template: '%s | TRK',
   },
   description: 'Plateforme de suivi douanier intelligente et digitalisée.',
+  other: {
+    "google-site-verification": "Bj242K2ybb67aL2y-SBsxH6f0yMNX5VRMl0NGaglJyE",
+  },
   keywords: 'TRK, douane, transit, blockchain, suivi, expédition, conformité',
   robots: 'index, follow',
   authors: [{ name: 'Votre Nom ou Entreprise' }],
