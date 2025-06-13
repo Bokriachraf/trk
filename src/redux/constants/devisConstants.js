@@ -1,0 +1,2 @@
+export const SET_DEVIS_DATA = 'SET_DEVIS_DATA'
+export const RESET_DEVIS_DATA = 'RESET_DEVIS_DATA'

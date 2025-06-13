@@ -3,6 +3,10 @@ import Providers from './Providers'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 
+// ✅ Importer react-toastify
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
 export const metadata = {
   title: {
     default: 'TRK | Plateforme de Suivi Douanier',
@@ -33,6 +37,17 @@ export default function RootLayout({ children }) {
           <Navbar />
           <main className="min-h-screen">{children}</main>
           <Footer />
+          {/* ✅ Ajouter le conteneur pour les toasts */}
+          <ToastContainer
+            position="top-center"
+            autoClose={10000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
         </Providers>
       </body>
     </html>
