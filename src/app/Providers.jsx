@@ -1,9 +1,8 @@
 'use client';
 
 import { Provider } from 'react-redux';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect,  useState } from 'react';
 import { makeStore } from '../redux/store';
-import { USER_SIGNIN_SUCCESS } from '../redux/constants/userConstants';
 
 export default function Providers({ children }) {
   const [store, setStore] = useState(null);
