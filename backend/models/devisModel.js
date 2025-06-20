@@ -46,6 +46,13 @@ const devisSchema = new mongoose.Schema(
     secteurActivite: { type: String },
     sourceDecouverte: { type: String }, // radio button
     newsletterConsent: { type: Boolean },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+
+    status: {
+    type: String,
+    enum: ['En attente', 'En cours', 'Validé', 'Rejeté'],
+    default: 'En attente',
+    },
   },
   {
     timestamps: true,

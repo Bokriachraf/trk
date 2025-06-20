@@ -30,8 +30,11 @@ export default function Navbar() {
               {userInfo.name}
             </span>
           )}
+          <Link href="/admin/devis" className="text-sm font-medium text-white hover:underline">
+          🔐 Admin 
+          </Link>
         </div>
-
+        
         {/* Bouton hamburger pour mobile */}
         <div className="md:hidden">
           <button
@@ -48,8 +51,8 @@ export default function Navbar() {
         {/* Menu desktop */}
         <ul className="hidden md:flex gap-6 items-center relative">
           <li><Link href="/" className="hover:text-yellow-400">Accueil</Link></li>
-          <li><Link href="#tableau" className="hover:text-yellow-400">Tableau de bord</Link></li>
-          <li><Link href="/shipments" className="hover:text-yellow-400">Expéditions</Link></li>
+          <li><Link href="#tableau" className="hover:text-yellow-400">Expéditions</Link></li>
+          <li><Link href="/devis/suivi" className="hover:text-yellow-400">suivi des dossiers</Link></li>
 
           {/* Dropdown Services & Activités */}
           <li

@@ -27,7 +27,7 @@ export default function Home() {
     <div className="relative min-h-screen">
       {/* Slider Fullscreen */}
       <div className="absolute inset-0 z-0">
-        <Image
+        {/* <Image
           src={sliderImages[current]}
           alt="Slide background"
           fill
@@ -35,7 +35,23 @@ export default function Home() {
           quality={100}
           priority
           className="transition-opacity duration-1000"
-        />
+        /> */}
+        <div className="fixed inset-0 -z-10">
+  <Image
+    src={sliderImages[current]}
+    alt="Slide background"
+    fill
+    priority
+    quality={100}
+    style={{
+      objectFit: 'cover',
+      objectPosition: 'center top',
+    }}
+    sizes="(max-width: 768px) 100vw, 100vw"
+    className="transition-opacity duration-1000"
+  />
+  <div className="absolute inset-0 bg-black bg-opacity-50" />
+</div>
         <div className="absolute inset-0 bg-black bg-opacity-40"></div>
       </div>
 
@@ -51,8 +67,8 @@ export default function Home() {
         // >
          className="text-white text-center md:text-left max-w-md"
         >
-         <h2 className="text-4xl font-bold mb-4">DouaNet Votre Transitaire et Agent de Sourcing en Tunisie</h2>
-         <h1 className="text-2xl font-bold text-center mb-4">
+         <h2 className="text-2xl font-bold mb-4 md:text-4xl">DouaNet Votre Transitaire et Agent de Sourcing en Tunisie</h2>
+         <h1 className="text-xl md:text-2xl font-bold text-center mb-4">
 DouaNet est le meilleur partenaire dont vous aurez besoin pour toute votre chaîne d'approvisionnement : sourcing, contrôle qualité, transport et dédouanement, assurant des livraisons fiables en tunisie </h1>
           <Link href="/devis">
         <button className="mt-6 bg-yellow-500 hover:bg-yellow-600 text-black px-6 py-3 rounded-xl">
@@ -68,7 +84,7 @@ DouaNet est le meilleur partenaire dont vous aurez besoin pour toute votre chaî
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="text-white text-center md:text-left max-w-md"
+          className="pb-24 text-white text-center md:text-left max-w-md"
         >
           <h2 className="text-4xl font-bold mb-4">Digitalisez votre transit & douane</h2>
           <p className="mb-6 text-lg">Suivi intelligent, conformité réglementaire, gain de temps.</p>
