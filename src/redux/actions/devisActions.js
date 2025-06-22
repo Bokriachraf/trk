@@ -103,8 +103,12 @@ export const getDevisDetails = (id) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     }
+    const isAdmin = userInfo?.isAdmin // ✅
+    const endpoint = isAdmin
+      ? `${API}/api/devis/admin/${id}`  // ✅ route spéciale pour admin
+      : `${API}/api/devis/${id}`        // route normale pour user
 
-    const { data } = await axios.get(`${API}/api/devis/${id}`, config)
+    const { data } = await axios.get(endpoint, config)
 
     dispatch({ type: DEVIS_DETAILS_SUCCESS, payload: data })
   } catch (error) {
