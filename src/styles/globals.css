@@ -52,3 +52,13 @@ body {
 .dropdown:hover .dropdown-content {
   display: block;
 }
+.home {
+  flex: 4;
+  padding-top: 30px;
+  background-color: white;
+}
+
+.homeWidgets {
+  display: flex;
+  margin: 20px;
+}

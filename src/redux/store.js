@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { shipmentListReducer,shipmentAddReducer } from './reducers/shipmentReducers';
 import {devisReducer,devisAdminListReducer,devisListMyReducer,devisDetailsReducer} from './reducers/devisReducers'
-import {  userRegisterReducer,userSigninReducer } from './reducers/userReducers';
+import {  userRegisterReducer,userSigninReducer,userDeleteReducer,userListReducer  } from './reducers/userReducers';
 
 export function makeStore(preloadedState = {}) {
   return configureStore({
@@ -14,6 +14,8 @@ export function makeStore(preloadedState = {}) {
       userRegister: userRegisterReducer,
       devisDetails: devisDetailsReducer,
       devisAdminList: devisAdminListReducer,
+      userList: userListReducer,
+      userDelete: userDeleteReducer,
 
     },
     preloadedState,

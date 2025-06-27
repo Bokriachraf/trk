@@ -70,7 +70,7 @@ export default function Home() {
         {/* Bloc gauche */}
         <motion.div
           id="tableau"
-          initial={{ x: -80, opacity: 20 }}
+          initial={{ x: -80, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 1 }}
           className="text-white text-center md:text-left max-w-xl"
