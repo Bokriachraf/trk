@@ -15,7 +15,7 @@ import {
   ChatBubbleOutline,
   DynamicFeed,
   Settings,
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 import './sidebar.css'
 
 function Sidebar() {

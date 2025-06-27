@@ -1,5 +1,5 @@
 'use client'
-import { Visibility } from "@material-ui/icons"
+import { Visibility } from "@mui/icons-material"
 import "./widgetSm.css"
 
 function WidgetSm() {
