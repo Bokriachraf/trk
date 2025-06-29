@@ -2,17 +2,19 @@
 
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { listAllDevis } from '../../../redux/actions/devisActions'
+import { listAllDevis, marquerTousDevisCommeVus } from '../../../redux/actions/devisActions'
 import { Loader2, CheckCircle, Clock, AlertCircle, Eye } from 'lucide-react'
 import Link from 'next/link'
+
 
 export default function AdminDevisPage() {
   const dispatch = useDispatch()
   const { loading, devis, error } = useSelector((state) => state.devisAdminList || {})
-
-  useEffect(() => {
-    dispatch(listAllDevis())
-  }, [dispatch])
+useEffect(() => {
+  
+  dispatch(marquerTousDevisCommeVus())
+}, [dispatch])
+ 
 
   const getStatusIcon = (status) => {
     switch (status) {

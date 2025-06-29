@@ -97,6 +97,13 @@ router.get('/:id', isAuth, async (req, res) => {
     res.status(500).json({ error: 'Erreur lors de la récupération du devis' })
   }
 })
-
+router.put('/admin/marque-comme-vu', isAuth, isAdmin, async (req, res) => {
+  try {
+    await Devis.updateMany({ vu: false }, { $set: { vu: true } })
+    res.json({ message: 'Tous les devis ont été marqués comme vus' })
+  } catch (error) {
+    res.status(500).json({ message: 'Erreur serveur' })
+  }
+})
 
 export default router

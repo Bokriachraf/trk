@@ -207,3 +207,23 @@ export const getDevisDetailsAdmin = (id) => async (dispatch, getState) => {
     })
   }
 }
+
+export const marquerTousDevisCommeVus = () => async (dispatch, getState) => {
+  const {
+    userSignin: { userInfo },
+  } = getState()
+
+  try {
+    await fetch(`${API}/api/devis/admin/marque-comme-vu`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    })
+
+    // ✅ Rafraîchir la liste des devis après avoir mis à jour
+    dispatch(listAllDevis())
+  } catch (error) {
+    console.error('Erreur lors de la mise à jour du champ vu', error)
+  }
+}

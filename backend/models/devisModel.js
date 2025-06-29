@@ -47,7 +47,10 @@ const devisSchema = new mongoose.Schema(
     sourceDecouverte: { type: String }, // radio button
     newsletterConsent: { type: Boolean },
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-
+    vu: {
+    type: Boolean,
+    default: false,
+    },
     status: {
     type: String,
     enum: ['En attente', 'En cours', 'Validé', 'Rejeté'],
@@ -62,46 +65,3 @@ const devisSchema = new mongoose.Schema(
 const Devis = mongoose.model('Devis', devisSchema)
 
 export default Devis
-// import mongoose from 'mongoose'
-
-// const devisSchema = new mongoose.Schema({
-//   nom: String,
-//   email: String,
-//   telephone: String,
-//   marchandise: String,
-//   poids: String,
-//   paysDepart: String,
-//   paysArrivee: String,
-//   dateSouhaitee: String,
-// }, { timestamps: true })
-
-// const Devis = mongoose.model('Devis', devisSchema)
-
-// export default Devis
-
-// import mongoose from 'mongoose'
-
-// const devisSchema = new mongoose.Schema(
-//   {
-//     nom: { type: String },
-//   email: { type: String },
-//   telephone: { type: String },
-//   marchandise: { type: String },
-//   poids: { type: String },
-//   dateSouhaitee: { type: String },
-//     paysDepart: { type: String, required: true },
-//     adresseDepart: { type: String },
-//     paysArrivee: { type: String, required: true },
-//     adresseArrivee: { type: String },
-//     incoterm: { type: String },
-//     dateExpedition: { type: Date },
-//     // Autres champs des étapes 2 et 3 seront ajoutés ensuite
-//   },
-//   {
-//     timestamps: true,
-//   }
-// )
-
-// const Devis = mongoose.model('Devis', devisSchema)
-
-// export default Devis
