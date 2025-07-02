@@ -1,11 +1,14 @@
-'use client'
-import { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { setDevisData } from '../../redux/actions/devisActions'
+'use client';
+
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setDevisData } from '../../redux/actions/devisActions';
+import countries from '../../utils/countries';
 
 export default function Step1({ onNext }) {
-  const dispatch = useDispatch()
-const devisData = useSelector(state => state?.devis?.devisData) || {}
+  const dispatch = useDispatch();
+  const devisData = useSelector((state) => state?.devis?.devisData) || {};
+
   const [form, setForm] = useState({
     paysDepart: devisData.paysDepart || '',
     adresseDepart: devisData.adresseDepart || '',
@@ -13,367 +16,269 @@ const devisData = useSelector(state => state?.devis?.devisData) || {}
     adresseArrivee: devisData.adresseArrivee || '',
     incoterm: devisData.incoterm || '',
     dateExpedition: devisData.dateExpedition || ''
-  })
+  });
+
+  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value })
-  }
+    setForm({ ...form, [e.target.name]: e.target.value });
+
+    // Efface l'erreur si utilisateur remplit le champ
+    if (errors[e.target.name]) {
+      setErrors({ ...errors, [e.target.name]: '' });
+    }
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    dispatch(setDevisData(form))
-    onNext()
-  }
+    e.preventDefault();
+
+    const newErrors = {};
+    if (!form.paysDepart) newErrors.paysDepart = 'Le pays de départ est requis';
+    if (!form.paysArrivee) newErrors.paysArrivee = 'Le pays d’arrivée est requis';
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+    } else {
+      dispatch(setDevisData(form));
+      onNext();
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-           <div>
-         <label className="text-xs block mb-1 font-medium">Pays de départ *</label>
-         <select
-           name="paysDepart"
-           value={form.paysDepart || ''}
-           onChange={handleChange}
-           className="p-1 h-7 text-xs w-full border rounded"
-         >
-           <option value="">-- Choisir un pays --</option>
-           <option value="Tunisie">Tunisie</option>
-           <option value="France">France</option>
-           <option value="Allemagne">Allemagne</option>
-           <option value="Italie">Italie</option>
-            <option value="Turquie">Turquie</option>
-         </select>
-       </div>
-       <div className="mb-4">
-         <label className="text-xs block mb-1 font-medium">Adresse de départ</label>
-         <input
-           type="text"
-           name="adresseDepart"
-           value={form.adresseDepart || ''}
-           onChange={handleChange}
-           className="p-1 h-7 text-xs w-full border rounded"
-         />
-       </div>
+      {/* Pays de départ */}
+      <div>
+        <label className="text-xs block mb-1 font-medium">
+          Pays de départ <span className="text-red-500">*</span>
+        </label>
+        <select
+          name="paysDepart"
+          value={form.paysDepart}
+          onChange={handleChange}
+          className={`text-xs h-10 sm:h-8 md:h-7 px-2 w-full border rounded${errors.paysDepart ? 'border-red-500' : 'border-gray-300'}`}
+        >
+          <option value="">-- Choisir un pays --</option>
+          {countries.map((country) => (
+            <option key={country} value={country}>{country}</option>
+          ))}
+        </select>
+        {errors.paysDepart && (
+          <p className="text-red-500 text-xs mt-1">{errors.paysDepart}</p>
+        )}
+      </div>
 
-       <div>
-         <label className="text-xs block mb-1 font-medium">Pays d’arrivée *</label>
-         <select
-           name="paysArrivee"
-           value={form.paysArrivee || ''}
-           onChange={handleChange}
-           className="p-1 h-7 text-xs w-full border rounded"
-         >
-           <option value="">-- Choisir un pays --</option>
-           <option value="Tunisie">Tunisie</option>
-           <option value="France">France</option>
-           <option value="Allemagne">Allemagne</option>
-           <option value="Italie">Italie</option>
-         </select>
-       </div>
+      {/* Adresse départ */}
+      <div>
+        <label className="text-xs block mb-1 font-medium">Adresse de départ</label>
+        <input
+          type="text"
+          name="adresseDepart"
+          value={form.adresseDepart}
+          onChange={handleChange}
+          className="p-1 h-7 text-xs w-full border rounded"
+        />
+      </div>
 
-       <div className="mb-4">
-         <label className="text-xs block mb-1 font-medium">Adresse d’arrivée</label>
-         <input
-           type="text"
-           name="adresseArrivee"
-           value={form.adresseArrivee || ''}
-           onChange={handleChange}
-           className="p-1 h-7 text-xs w-full border rounded"
-         />
-       </div>
+      {/* Pays d’arrivée */}
+      <div>
+        <label className="text-xs block mb-1 font-medium">
+          Pays d’arrivée <span className="text-red-500">*</span>
+        </label>
+        <select
+          name="paysArrivee"
+          value={form.paysArrivee}
+          onChange={handleChange}
+          className={`p-1 h-7 text-xs w-full border rounded ${errors.paysArrivee ? 'border-red-500' : 'border-gray-300'}`}
+        >
+          <option value="">-- Choisir un pays --</option>
+          {countries.map((country) => (
+            <option key={country} value={country}>{country}</option>
+          ))}
+        </select>
+        {errors.paysArrivee && (
+          <p className="text-red-500 text-xs mt-1">{errors.paysArrivee}</p>
+        )}
+      </div>
 
-       <div className="mb-4">
-         <label className="text-xs block mb-1 font-medium">Incoterm d’achat</label>
-         <select
-           name="incoterm"
-           value={form.incoterm || ''}
-           onChange={handleChange}
-           className="p-1 h-7 text-xs w-full border rounded"
-         >
-           <option value="">Je ne sais pas encore</option>
-           <option value="EXW">EXW</option>
-           <option value="CFR">CFR</option>
-           <option value="FCA">FCA</option>
-           <option value="CIF">CIF</option>
-           <option value="DAP">DAP</option>
-         </select>
-         <small className="text-gray-500">Définit où notre prise en charge commence.</small>
-       </div>
+      {/* Adresse arrivée */}
+      <div>
+        <label className="text-xs block mb-1 font-medium">Adresse d’arrivée</label>
+        <input
+          type="text"
+          name="adresseArrivee"
+          value={form.adresseArrivee}
+          onChange={handleChange}
+          className="p-1 h-7 text-xs w-full border rounded"
+        />
+      </div>
 
-       <div className="mb-4">
-         <label className="text-xs block mb-1 font-medium">Date d’expédition</label>
-         <input
-           type="date"
-           name="dateExpedition"
-           value={form.dateExpedition || ''}
-           onChange={handleChange}
-           className="p-1 h-7 text-xs w-full  border rounded"
-         />
+      {/* Incoterm */}
+      <div>
+        <label className="text-xs block mb-1 font-medium">Incoterm d’achat</label>
+        <select
+          name="incoterm"
+          value={form.incoterm}
+          onChange={handleChange}
+          className="p-1 h-7 text-xs w-full border rounded"
+        >
+          <option value="">Je ne sais pas encore</option>
+          <option value="CFR">CFR</option>
+          <option value="CIF">CIF</option>
+          <option value="CIP">CIP</option>
+          <option value="CPT">CPT</option>
+          <option value="DAP">DAP</option>
+          <option value="DDP">DDP</option>
+          <option value="DAP">DAP</option>
+          <option value="EXW">EXW</option>
+          <option value="FAS">FAS</option>
+          <option value="FCA">FCA</option>
+          <option value="FOB">FOB</option>
+
+        </select>
+        <small className="text-gray-500">Définit où notre prise en charge commence.</small>
+      </div>
+
+      {/* Date d’expédition */}
+      <div>
+        <label className="text-xs block mb-1 font-medium">Date d’expédition</label>
+        <input
+          type="date"
+          name="dateExpedition"
+          value={form.dateExpedition}
+          onChange={handleChange}
+          className="p-1 h-7 text-xs w-full border rounded"
+        />
         <small className="text-gray-500">Format : yyyy-mm-dd</small>
       </div>
-         <div className="flex justify-end mt-6">
-         <button type="submit" className="bg-green-600 text-white px-4 py-2 rounded">
-           Suivant
-         </button>
-       </div>
 
-      {/* <input name="paysDepart" placeholder="Pays de départ" value={form.paysDepart} onChange={handleChange} required /> */}
-      {/* <input name="adresseDepart" placeholder="Adresse de départ" value={form.adresseDepart} onChange={handleChange} />
-      <input name="paysArrivee" placeholder="Pays d’arrivée" value={form.paysArrivee} onChange={handleChange} required />
-      <input name="adresseArrivee" placeholder="Adresse d’arrivée" value={form.adresseArrivee} onChange={handleChange} />
-      <input name="incoterm" placeholder="Incoterm" value={form.incoterm} onChange={handleChange} />
-      <input type="date" name="dateExpedition" value={form.dateExpedition} onChange={handleChange} /> */}
-      {/* <button type="submit">Suivant</button> */}
+      {/* Bouton Suivant */}
+      <div className="flex justify-end mt-6">
+        <button type="submit" className="bg-green-600 text-white px-4 py-2 rounded">
+          Suivant
+        </button>
+      </div>
     </form>
-  )
+  );
 }
-// 'use client'
 
+
+// 'use client'
+// import { useState } from 'react'
 // import { useDispatch, useSelector } from 'react-redux'
 // import { setDevisData } from '../../redux/actions/devisActions'
 
 // export default function Step1({ onNext }) {
 //   const dispatch = useDispatch()
-//   const devisData = useSelector((state) => state.devis ||  {})
+// const devisData = useSelector(state => state?.devis?.devisData) || {}
+//   const [form, setForm] = useState({
+//     paysDepart: devisData.paysDepart || '',
+//     adresseDepart: devisData.adresseDepart || '',
+//     paysArrivee: devisData.paysArrivee || '',
+//     adresseArrivee: devisData.adresseArrivee || '',
+//     incoterm: devisData.incoterm || '',
+//     dateExpedition: devisData.dateExpedition || ''
+//   })
 
 //   const handleChange = (e) => {
-//     dispatch(setDevisData({ [e.target.name]: e.target.value }))
+//     setForm({ ...form, [e.target.name]: e.target.value })
+//   }
+
+//   const handleSubmit = (e) => {
+//     e.preventDefault()
+//     dispatch(setDevisData(form))
+//     onNext()
 //   }
 
 //   return (
-//     <div className="p-0">
-//       <h2 className="text-sm font-bold mb-4">Étape 1 : Départ et arrivée</h2>
+//     <form onSubmit={handleSubmit} className="space-y-4">
+//            <div>
+//          <label className="text-xs block mb-1 font-medium">Pays de départ *</label>
+//          <select
+//            name="paysDepart"
+//            value={form.paysDepart || ''}
+//            onChange={handleChange}
+//            className="p-1 h-7 text-xs w-full border rounded"
+//          >
+//            <option value="">-- Choisir un pays --</option>
+//            <option value="Tunisie">Tunisie</option>
+//            <option value="France">France</option>
+//            <option value="Allemagne">Allemagne</option>
+//            <option value="Italie">Italie</option>
+//             <option value="Turquie">Turquie</option>
+//          </select>
+//        </div>
+//        <div className="mb-4">
+//          <label className="text-xs block mb-1 font-medium">Adresse de départ</label>
+//          <input
+//            type="text"
+//            name="adresseDepart"
+//            value={form.adresseDepart || ''}
+//            onChange={handleChange}
+//            className="p-1 h-7 text-xs w-full border rounded"
+//          />
+//        </div>
 
-//       <div>
-//         <label className="text-xs block mb-1 font-medium">Pays de départ *</label>
-//         <select
-//           name="paysDepart"
-//           value={devisData.paysDepart || ''}
-//           onChange={handleChange}
-//           className="p-1 h-7 text-xs w-full border rounded"
-//         >
-//           <option value="">-- Choisir un pays --</option>
-//           <option value="Tunisie">Tunisie</option>
-//           <option value="France">France</option>
-//           <option value="Allemagne">Allemagne</option>
-//           <option value="Italie">Italie</option>
-//            <option value="Turquie">Turquie</option>
-//         </select>
-//       </div>
+//        <div>
+//          <label className="text-xs block mb-1 font-medium">Pays d’arrivée *</label>
+//          <select
+//            name="paysArrivee"
+//            value={form.paysArrivee || ''}
+//            onChange={handleChange}
+//            className="p-1 h-7 text-xs w-full border rounded"
+//          >
+//            <option value="">-- Choisir un pays --</option>
+//            <option value="Tunisie">Tunisie</option>
+//            <option value="France">France</option>
+//            <option value="Allemagne">Allemagne</option>
+//            <option value="Italie">Italie</option>
+//          </select>
+//        </div>
 
-//       <div className="mb-4">
-//         <label className="text-xs block mb-1 font-medium">Adresse de départ</label>
-//         <input
-//           type="text"
-//           name="adresseDepart"
-//           value={devisData.adresseDepart || ''}
-//           onChange={handleChange}
-//           className="p-1 h-7 text-xs w-full border rounded"
-//         />
-//       </div>
+//        <div className="mb-4">
+//          <label className="text-xs block mb-1 font-medium">Adresse d’arrivée</label>
+//          <input
+//            type="text"
+//            name="adresseArrivee"
+//            value={form.adresseArrivee || ''}
+//            onChange={handleChange}
+//            className="p-1 h-7 text-xs w-full border rounded"
+//          />
+//        </div>
 
-//       <div>
-//         <label className="text-xs block mb-1 font-medium">Pays d’arrivée *</label>
-//         <select
-//           name="paysArrivee"
-//           value={devisData.paysArrivee || ''}
-//           onChange={handleChange}
-//           className="p-1 h-7 text-xs w-full border rounded"
-//         >
-//           <option value="">-- Choisir un pays --</option>
-//           <option value="Tunisie">Tunisie</option>
-//           <option value="France">France</option>
-//           <option value="Allemagne">Allemagne</option>
-//           <option value="Italie">Italie</option>
-//         </select>
-//       </div>
+//        <div className="mb-4">
+//          <label className="text-xs block mb-1 font-medium">Incoterm d’achat</label>
+//          <select
+//            name="incoterm"
+//            value={form.incoterm || ''}
+//            onChange={handleChange}
+//            className="p-1 h-7 text-xs w-full border rounded"
+//          >
+//            <option value="">Je ne sais pas encore</option>
+//            <option value="EXW">EXW</option>
+//            <option value="CFR">CFR</option>
+//            <option value="FCA">FCA</option>
+//            <option value="CIF">CIF</option>
+//            <option value="DAP">DAP</option>
+//          </select>
+//          <small className="text-gray-500">Définit où notre prise en charge commence.</small>
+//        </div>
 
-//       <div className="mb-4">
-//         <label className="text-xs block mb-1 font-medium">Adresse d’arrivée</label>
-//         <input
-//           type="text"
-//           name="adresseArrivee"
-//           value={devisData.adresseArrivee || ''}
-//           onChange={handleChange}
-//           className="p-1 h-7 text-xs w-full border rounded"
-//         />
-//       </div>
-
-//       <div className="mb-4">
-//         <label className="text-xs block mb-1 font-medium">Incoterm d’achat</label>
-//         <select
-//           name="incoterm"
-//           value={devisData.incoterm || ''}
-//           onChange={handleChange}
-//           className="p-1 h-7 text-xs w-full border rounded"
-//         >
-//           <option value="">Je ne sais pas encore</option>
-//           <option value="EXW">EXW</option>
-//           <option value="CFR">CFR</option>
-//           <option value="FCA">FCA</option>
-//           <option value="CIF">CIF</option>
-//           <option value="DAP">DAP</option>
-//         </select>
-//         <small className="text-gray-500">Définit où notre prise en charge commence.</small>
-//       </div>
-
-//       <div className="mb-4">
-//         <label className="text-xs block mb-1 font-medium">Date d’expédition</label>
-//         <input
-//           type="date"
-//           name="dateExpedition"
-//           value={devisData.dateExpedition || ''}
-//           onChange={handleChange}
-//           className="p-1 h-7 text-xs w-full  border rounded"
-//         />
+//        <div className="mb-4">
+//          <label className="text-xs block mb-1 font-medium">Date d’expédition</label>
+//          <input
+//            type="date"
+//            name="dateExpedition"
+//            value={form.dateExpedition || ''}
+//            onChange={handleChange}
+//            className="p-1 h-7 text-xs w-full  border rounded"
+//          />
 //         <small className="text-gray-500">Format : yyyy-mm-dd</small>
 //       </div>
-
-//       <div className="flex justify-end mt-6">
-//         <button onClick={onNext} className="bg-green-600 text-white px-4 py-2 rounded">
-//           Suivant
-//         </button>
-//       </div>
-//     </div>
-//   )
-// }
-
-// import { useDispatch, useSelector } from 'react-redux';
-// import { setDevisData } from '../../redux/actions/devisActions';
-
-// export default function Step1({ onNext }) {
-//   const dispatch = useDispatch();
-//   const devisData = useSelector((state) => state.devis);
-
-//   const handleChange = (e) => {
-//     const { name, value } = e.target;
-//     dispatch(setDevisData({ [name]: value }));
-//   };
-
-//   return (
-//     <div className="p-4 pt-20 pb-24">
-//       <h2 className="text-xl font-bold mb-4">Informations personnelles</h2>
-//       <input
-//         type="text"
-//         name="nom"
-//         value={devisData.nom}
-//         onChange={handleChange}
-//         placeholder="Votre nom"
-//         className="border p-2 w-full mb-4"
-//       />
-//       <input
-//         type="email"
-//         name="email"
-//         value={devisData.email}
-//         onChange={handleChange}
-//         placeholder="Votre email"
-//         className="border p-2 w-full mb-4"
-//       />
-//       <button onClick={onNext} className="bg-blue-500 text-white px-4 py-2 rounded">
-//         Suivant
-//       </button>
-//     </div>
-//   );
-// }
-
-// 'use client'
-
-// export default function Step1({ data, handleChange, handleNext }) {
-//   return (
-//     <div className="p-4">
-//       <h2 className="text-xl font-bold mb-4">Étape 1 : Départ et arrivée</h2>
-
-//       <div className="mb-4">
-//         <label className="block mb-1 font-medium">Pays de départ *</label>
-//         <select
-//           name="paysDepart"
-//           value={data.paysDepart || ''}
-//           onChange={handleChange}
-//           className="w-full p-2 border rounded"
-//           required
-//         >
-//           <option value="">-- Choisir un pays --</option>
-//           <option value="Tunisie">Tunisie</option>
-//           <option value="France">France</option>
-//           <option value="Allemagne">Allemagne</option>
-//           <option value="Italie">Italie</option>
-//         </select>
-//       </div>
-
-//       <div className="mb-4">
-//         <label className="block mb-1 font-medium">Adresse de départ</label>
-//         <input
-//           type="text"
-//           name="adresseDepart"
-//           value={data.adresseDepart || ''}
-//           onChange={handleChange}
-//           placeholder="Adresse, ville ou terminal"
-//           className="w-full p-2 border rounded"
-//         />
-//       </div>
-
-//       <div className="mb-4">
-//         <label className="block mb-1 font-medium">Pays d’arrivée *</label>
-//         <select
-//           name="paysArrivee"
-//           value={data.paysArrivee || ''}
-//           onChange={handleChange}
-//           className="w-full p-2 border rounded"
-//           required
-//         >
-//           <option value="">-- Choisir un pays --</option>
-//           <option value="Tunisie">Tunisie</option>
-//           <option value="France">France</option>
-//           <option value="Allemagne">Allemagne</option>
-//           <option value="Italie">Italie</option>
-//         </select>
-//       </div>
-
-//       <div className="mb-4">
-//         <label className="block mb-1 font-medium">Adresse d’arrivée</label>
-//         <input
-//           type="text"
-//           name="adresseArrivee"
-//           value={data.adresseArrivee || ''}
-//           onChange={handleChange}
-//           placeholder="Adresse, ville ou terminal"
-//           className="w-full p-2 border rounded"
-//         />
-//       </div>
-
-//       <div className="mb-4">
-//         <label className="block mb-1 font-medium">Incoterm d’achat</label>
-//         <select
-//           name="incoterm"
-//           value={data.incoterm || ''}
-//           onChange={handleChange}
-//           className="w-full p-2 border rounded"
-//         >
-//           <option value="">Je ne sais pas encore</option>
-//           <option value="EXW">EXW</option>
-//           <option value="FCA">FCA</option>
-//           <option value="CIF">CIF</option>
-//           <option value="DAP">DAP</option>
-//         </select>
-//         <small className="text-gray-500">Cet incoterm définit où notre prise en charge commence.</small>
-//       </div>
-
-//       <div className="mb-4">
-//         <label className="block mb-1 font-medium">Date d’expédition</label>
-//         <input
-//           type="date"
-//           name="dateExpedition"
-//           value={data.dateExpedition || ''}
-//           onChange={handleChange}
-//           className="w-full p-2 border rounded"
-//         />
-//         <small className="text-gray-500">Format : dd MMM yyyy</small>
-//       </div>
-
-//       <div className="flex justify-end mt-6">
-//         <button onClick={handleNext} className="bg-green-600 text-white px-4 py-2 rounded">
-//           Suivant
-//         </button>
-//       </div>
-//     </div>
+//          <div className="flex justify-end mt-6">
+//          <button type="submit" className="bg-green-600 text-white px-4 py-2 rounded">
+//            Suivant
+//          </button>
+//        </div>
+//     </form>
 //   )
 // }
